@@ -1,9 +1,9 @@
 module ET
   class Base
     ENDPOINTS = {
-      S1: 'https://webservice.exacttarget.com/Service.asmx',
-      S4: 'https://webservice.s4.exacttarget.com/Service.asmx',
-      S6: 'https://webservice.s6.exacttarget.com/Service.asmx'
+      :S1 => 'https://webservice.exacttarget.com/Service.asmx',
+      :S4 => 'https://webservice.s4.exacttarget.com/Service.asmx',
+      :S6 => 'https://webservice.s6.exacttarget.com/Service.asmx'
     }
 
     attr_accessor :id, :errors
@@ -85,7 +85,7 @@ module ET
     def self.find(filter = nil, continue_request = nil, properties = nil)
       resp = request(:retrieve) do
         body = {
-          retrieve_request: { object_type: et_object_type }
+          :retrieve_request => { :object_type => et_object_type }
         }
 
         properties ||= self.find_properties.map(&:to_s).map(&:camelize)
@@ -98,9 +98,9 @@ module ET
       end
 
       if resp[:overall_status] == "OK"
-        { overall_status: resp[:overall_status], request_id: resp[:request_id], results: resp[:results].map { |hash| new(hash) } }
+        { :overall_status  => resp[:overall_status], :request_id => resp[:request_id], :results => resp[:results].map { |hash| new(hash) } }
       else
-        { overall_status: resp[:overall_status], request_id: resp[:request_id] }
+        { :overall_status => resp[:overall_status], :request_id => resp[:request_id] }
       end
     end
 
@@ -132,7 +132,7 @@ module ET
 
       resp = request(:create) do
         soap.body = {
-          plural_class_name => objs.map(&:to_hash)
+          :plural_class_name => objs.map(&:to_hash)
         }
       end
 
@@ -178,7 +178,7 @@ module ET
 
       resp = request(:delete) do
         soap.body = {
-          plural_class_name => objs.map { |o| { id: o.id }}
+          plural_class_name => objs.map { |o| { id => o.id }}
         }
       end
 
@@ -216,7 +216,7 @@ module ET
       _self = self
 
       resp = request(:read) do
-        soap.body = { filter: { id: _self.id } }
+        soap.body = { :filter => { :id => _self.id } }
       end
 
       resp[:return].each do |k, v|

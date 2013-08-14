@@ -10,8 +10,8 @@ module ET
 
       resp = request(:update) do
         soap.body = {
-          update_request: {
-            list: lists.map { |l| { id: l.id, subscribers: [] } }
+          :update_request => {
+           :list => lists.map { |l| { :id => l.id, :subscribers => [] } }
           }
         }
       end
@@ -43,7 +43,7 @@ module ET
 
       resp = request(:update) do
         soap.body = {
-          list: { id: _self.id, subscribers: subscribers.map { |s| { id: s.id } } }
+          :list => { :id => _self.id, :subscribers => subscribers.map { |s| { :id => s.id } } }
         }
       end
 
@@ -57,7 +57,7 @@ module ET
     end
 
     def to_hash
-      hash = { list_name: list_name, description: description, type: type, subscribers: subscribers }
+      hash = { :list_name => list_name, :description => description, :type => type, :subscribers => subscribers }
       hash[:id] = id if id.present?
       hash
     end

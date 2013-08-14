@@ -23,9 +23,9 @@ module ET
 
     def to_hash
       if id.present?
-        { id: id, email_address: email_address, attributes: attributes.map { |k,v| { name: k, value: v }}}
+        { :id => id, email_address: email_address, :attributes => attributes.map { |k,v| { name: k, :value => v }}}
       else
-        { email_address: email_address, attributes: attributes.map { |k,v| { name: k, value: v }}}
+        { :email_address => email_address, :attributes => attributes.map { |k,v| { :name => k, :value => v }}}
       end
     end
 

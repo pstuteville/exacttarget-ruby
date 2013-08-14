@@ -18,7 +18,7 @@ module ET
     def to_hash
       return nil if property.nil? and value.nil?
 
-      hash = { property: property, simple_operator: simple_operator }
+      hash = { :property => property, :simple_operator => simple_operator }
 
       if value.is_a? Date or value.is_a? Time
         hash[:date_value] = value
